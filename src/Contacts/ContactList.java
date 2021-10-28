@@ -11,18 +11,33 @@ public class ContactList {
         contacts.removeIf(contact -> contact.name.equals(name));
     }
 
-    public ArrayList<Hobbie> getHobbies(){
-        ArrayList<Hobbie> hobbies = new ArrayList<Hobbie>();
-
-        for (Contact contact : contacts )
+    public Object[][] getHobbies(){
+        ArrayList<Object[]> hobbies = new ArrayList<Object[]>();
+        for (Contact contact : contacts)
             for (Hobbie hobbie : contact.hobbies)
                 if (hobbie.weekly_frequency > 1)
-                    hobbies.add(hobbie);
+                    hobbies.add(new Object[]{ hobbie.name, hobbie.weekly_frequency });
 
-        return hobbies;
+        Object[][] hobbiesVector = new Object[hobbies.size()][];
+        for (int i = 0; i < hobbies.size(); i++)
+            hobbiesVector[i] = hobbies.get(i);
+
+        return hobbiesVector;
     }
 
-    public String[] getHeader(){
+    public Object[][] getContacts(){
+        Object[][] contactsList = new Object[getSize()][];
+        for (int i = 0; i < getSize(); i++)
+            contactsList[i] = new Object[]{
+                contacts.get(i).name,
+                contacts.get(i).phone,
+                contacts.get(i).address,
+                contacts.get(i).birth_date
+            };
+        return contactsList;
+    }
+
+    public String[] getContactHeader(){
         return new String[] {
             "Nome",
             "Telefone",
@@ -31,15 +46,10 @@ public class ContactList {
         };
     }
 
-    public Object[][] getContacts(){
-        Object[][] contactsList = new Object[getSize()][];
-        for (int x = 0; x < getSize(); x++)
-            contactsList[x] = new Object[]{
-                contacts.get(x).name,
-                contacts.get(x).phone,
-                contacts.get(x).address,
-                contacts.get(x).birth_date
-            };
-        return contactsList;
+    public String[] getHobbieHeader(){
+        return new String[] {
+                "Nome",
+                "Frequência"
+        };
     }
 }

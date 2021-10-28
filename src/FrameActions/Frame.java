@@ -12,9 +12,9 @@ public class Frame extends JFrame {
         super(title);
     }
 
-    public void renderTable(){
+    public void renderTableContacts(){
         Object[][] data = contactList.getContacts();
-        String[] columnNames = contactList.getHeader();
+        String[] columnNames = contactList.getContactHeader();
 
         table = new JTable(data, columnNames);
 
@@ -22,18 +22,34 @@ public class Frame extends JFrame {
         this.add(table, BorderLayout.CENTER);
     }
 
-    public void removeTable(){
-        this.remove(table);
-    }
-
-    public void updateTable(){
+    public void updateTableContacts(){
         this.removeTable();
-        this.renderTable();
+        this.renderTableContacts();
         this.validate();
     }
-    
-    public void render(){
-        // Menu Bar
+
+    public void renderTableHobbies(){
+        Object[][] data = contactList.getHobbies();
+        String[] columnNames = contactList.getHobbieHeader();
+
+        table = new JTable(data, columnNames);
+
+        this.add(table.getTableHeader(), BorderLayout.PAGE_START);
+        this.add(table, BorderLayout.CENTER);
+    }
+
+    public void updateTableHobbies(){
+        this.removeTable();
+        this.renderTableHobbies();
+        this.validate();
+    }
+
+    public void removeTable(){
+        this.remove(table);
+        this.remove(table.getTableHeader());
+    }
+
+    public void renderMenuBar(){
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");
 
@@ -48,21 +64,22 @@ public class Frame extends JFrame {
         menu.add(menuItem);
         menu.addSeparator();
 
+        menuItem = new JMenuItem("Vizualizar Contatos");
+        menuItem.addActionListener(new ViewContactsAction(this, contactList));
+        menu.add(menuItem);
+        menu.addSeparator();
+
         menuItem = new JMenuItem("Vizualizar Passa-Tempos");
+        menuItem.addActionListener(new ViewHobbiesAction(this, contactList));
         menu.add(menuItem);
 
         menuBar.add(menu);
         this.setJMenuBar(menuBar);
-
-
-//        if (contactList.getSize() == 0){
-//            JLabel label = new JLabel("Não há contatos salvos.");
-//            this.add(label, BorderLayout.CENTER);
-//        } else {
-//            renderTable();
-//        }
-        renderTable();
-
+    }
+    
+    public void render(){
+        renderMenuBar();
+        renderTableContacts();
     }
 
     public void start(){

@@ -14,6 +14,6 @@ public class RemoveContactAction extends ContactListAction {
     public void actionPerformed(ActionEvent e) {
         String name = JOptionPane.showInputDialog(null, "Nome");
         contactList.removeContactByName(name);
-        frame.updateTable();
+        frame.updateTableContacts();
     }
 }
