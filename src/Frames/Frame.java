@@ -1,12 +1,14 @@
-package FrameActions;
+package Frames;
 
+import Actions.*;
 import Contacts.ContactList;
+import TableModel.ContactTableModel;
 import javax.swing.*;
 import java.awt.*;
 
 public class Frame extends JFrame {
-    public ContactList contactList = new ContactList();
-    public JTable table;
+    private ContactList contactList = new ContactList();
+    private JTable table;
     
     public Frame(String title) throws HeadlessException {
         super(title);
@@ -17,6 +19,7 @@ public class Frame extends JFrame {
         String[] columnNames = contactList.getContactHeader();
 
         table = new JTable(data, columnNames);
+        table.getModel().addTableModelListener(new ContactTableModel(contactList));
 
         this.add(table.getTableHeader(), BorderLayout.PAGE_START);
         this.add(table, BorderLayout.CENTER);
@@ -33,6 +36,7 @@ public class Frame extends JFrame {
         String[] columnNames = contactList.getHobbieHeader();
 
         table = new JTable(data, columnNames);
+//        table.getModel().addTableModelListener(new TableModel.MyTableModel(contactList));
 
         this.add(table.getTableHeader(), BorderLayout.PAGE_START);
         this.add(table, BorderLayout.CENTER);
@@ -51,30 +55,46 @@ public class Frame extends JFrame {
 
     public void renderMenuBar(){
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menu");
+        menuBar.add(renderAddRemoveMenu());
+        menuBar.add(renderViewMenu());
+        this.setJMenuBar(menuBar);
+    }
 
+    public JMenu renderAddRemoveMenu(){
+        JMenu addRemoveMenu = new JMenu("Adicionar/Remover");
         JMenuItem menuItem;
+
         menuItem = new JMenuItem("Adicionar contato");
         menuItem.addActionListener(new AddContactAction(this, contactList));
-        menu.add(menuItem);
-        menu.addSeparator();
+        addRemoveMenu.add(menuItem);
+        addRemoveMenu.addSeparator();
 
         menuItem = new JMenuItem("Remover contato");
         menuItem.addActionListener(new RemoveContactAction(this, contactList));
-        menu.add(menuItem);
-        menu.addSeparator();
+        addRemoveMenu.add(menuItem);
+        addRemoveMenu.addSeparator();
+
+        menuItem = new JMenuItem("Adicionar passa-tempo");
+        menuItem.addActionListener(new AddHobbieAction(this, contactList));
+        addRemoveMenu.add(menuItem);
+
+        return addRemoveMenu;
+    }
+
+    public JMenu renderViewMenu(){
+        JMenu viewMenu = new JMenu("Vizualizar");
+        JMenuItem menuItem;
 
         menuItem = new JMenuItem("Vizualizar Contatos");
         menuItem.addActionListener(new ViewContactsAction(this, contactList));
-        menu.add(menuItem);
-        menu.addSeparator();
+        viewMenu.add(menuItem);
+        viewMenu.addSeparator();
 
         menuItem = new JMenuItem("Vizualizar Passa-Tempos");
         menuItem.addActionListener(new ViewHobbiesAction(this, contactList));
-        menu.add(menuItem);
+        viewMenu.add(menuItem);
 
-        menuBar.add(menu);
-        this.setJMenuBar(menuBar);
+        return viewMenu;
     }
     
     public void render(){

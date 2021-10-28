@@ -1,6 +1,8 @@
-package FrameActions;
+package Actions;
 
 import Contacts.ContactList;
+import Frames.Frame;
+
 import javax.swing.*;
 
 public abstract class ContactListAction extends AbstractAction {

@@ -1,6 +1,7 @@
-package FrameActions;
+package Actions;
 
 import Contacts.ContactList;
+import Frames.Frame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

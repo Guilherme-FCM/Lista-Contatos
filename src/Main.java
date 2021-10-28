@@ -1,9 +1,8 @@
-import FrameActions.Frame;
+import Frames.Frame;
 
 public class Main {
     public static void main(String[] args) {
         Frame mainFrame = new Frame("Lista de Contatos");
-
         mainFrame.render();
         mainFrame.start();
     }

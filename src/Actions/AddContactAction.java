@@ -1,8 +1,7 @@
-package FrameActions;
+package Actions;
 
-import Contacts.Contact;
-import Contacts.ContactList;
-import Contacts.Hobbie;
+import Contacts.*;
+import Frames.Frame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

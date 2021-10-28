@@ -1,6 +1,8 @@
-package FrameActions;
+package Actions;
 
 import Contacts.ContactList;
+import Frames.Frame;
+
 import java.awt.event.ActionEvent;
 
 public class ViewHobbiesAction extends ContactListAction {
